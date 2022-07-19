@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Searcher</title>
+    <link rel="stylesheet" href="bootstrap.min (1).css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">File Searcher</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    <form class="fileForm">
+        <fieldset>
+            <div class="form-group">
+                <label for="textArea" class="form-label mt-4 explanation">Enter letters/words/phrases to be searched for:</label>
+                <p class="text-primary disclaimer">Separate with tilde (~)</p>
+                <textarea class="form-control" id="textArea" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="formFile" class="form-label mt-4">Upload File</label>
+                <p class="text-danger disclaimer">Currently Cannot Read Uploaded Files</p>
+                <input class="form-control" type="file" id="formFile">
+            </div>
+            <legend class="mt-4">Search Options</legend>
+            <p class="text-primary searchDisclaimer">Only Words Currently (default option)</p>
+            <div class="form-check disabled">
+                <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" disabled="">
+                Search for letters
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" checked="">
+                Search for words
+                </label>
+            </div>
+            <div class="form-check disabled">
+                <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" disabled="">
+                Search for phrases
+                </label>
+            </div>
+            <fieldset>
+                <legend class="mt-4">File Type</legend>
+                <p class="text-primary searchDisclaimer">Only .txt currently</p>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked="">
+                  <label class="form-check-label" for="flexSwitchCheckDefault">.txt</label>
+                </div>
+                <div class="form-check form-switch disabled">
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" disabled="">
+                  <label class="form-check-label" for="flexSwitchCheckChecked">.json</label>
+                </div>
+              </fieldset>
+            <div class="submissionContainer">
+                <button type="submit" class="btn btn-primary submission">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+    <div class="progressContainer">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
+        </div>
+    </div>
+    <section class="overlay">
+        <div id="ovrly"></div>
+        <div id="modal">
+            <button id="cross">&cross;</button>
+            <h4 id="modalContent">Don't Forget to Add Words to Search For.</h4>
+        </div>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

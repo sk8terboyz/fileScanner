@@ -1,0 +1,5 @@
+This is a file that I will attempt to get each occurence of when a specified letter, word, or phrase will occur.
+
+I will have to search through this entire test file (although it isn't very long) for an unspecified value and then return the number of instances in which that value is used.
+
+I hope this doesn't fail too hard. I know I will need to focus some effort towards differentiating when a word ends with a "." or any other ending punctuation. I think I will have to read it letter by letter instead of word by word, but it may be worth to search for words first then break up the words and search their individual letters. I feel like searching for phrases will be the hardest, but I may be able to circumvent that issue by mapping, but I'm not sure.

@@ -15,4 +15,4 @@ I created this file scanner to take a .txt file and read through it and output w
 - Choose a search option
   - Currently only words are able to be specified
 - Choose a file type
-  - Currently only .txt files are able to be read
+  - Currently only .txt files are able to be searched

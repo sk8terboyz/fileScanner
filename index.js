@@ -20,7 +20,12 @@ $(".fileForm").submit((e) => {
                 // Checking words only
                 let searchingText = separateText(text)
                 console.log(`Searching for '${searchingText}' in ${filePath}`);
-                readTxtFile(filePath, searchingText);
+                if(e.target[7].checked){
+                    readTxtFile(filePath, searchingText);
+                }
+                if(e.target[8].checked) {
+                    readJsonFile(filePath, searchingText);
+                }
             }
             if(e.target[5].checked) {
                 console.log("check for phrases");
@@ -55,12 +60,20 @@ function separateText(text) {
     return lower;
 }
 
-// get all data content
+// get all data content from .txt files
 function readTxtFile(file, searchingText) {
     console.log("reading file, searching for words");
     fetch(file)
     .then(res => res.text())
     .then(data => {getIndices(data.toLowerCase(), searchingText)})
+}
+
+// get all data content from .txt files
+function readJsonFile(file, searchingText) {
+    console.log("reading file, searching for words");
+    fetch(file)
+    .then(res => res.json())
+    .then(data => {getIndices(data, searchingText)})
 }
 
 // get all indices when searching words are found
@@ -92,8 +105,12 @@ function getIndices(content, searchingText) {
 // May need to make this remove punctuation as well (not entirely sure yet though)
 function splitByWord(content) {
     // remove newline characters
+    // for .txt files
     let fixed = content.replace(/\r?\n|\r/g, " ");
     return fixed.split(" ");
+
+    // for .json files
+    // return content
 }
 
 // Only works with large files (for now will not be used but I like the idea)

@@ -14,6 +14,7 @@ $(".fileForm").submit((e) => {
 	        $("#modal").animate({top: "100"});
         } else {
             if(e.target[3].checked) {
+                // Checking letters only
                 console.log("check for letters");
             }
             if(e.target[4].checked) {
@@ -32,6 +33,7 @@ $(".fileForm").submit((e) => {
             }
         }
     } else {
+        // Error Modal
         $("#ovrly").fadeIn();
 	    $("#modal").show();
 	    $("#modal").animate({top: "100"});
@@ -39,17 +41,28 @@ $(".fileForm").submit((e) => {
     }
 })
 
-// overlay buttons
+// modal button event listeners
 $("#ovrly").click(function () {
     $("#ovrly").hide();
     $("#modal").hide();
     $("#modal").css("top", "-310px");
+    $("#modalHeader")[0].innerHTML = "Disclaimer"
+    $("#modalContent")[0].innerHTML = "Don't Forget to Add Words to Search For."
 });
 $("#cross").click(function () {
     $("#ovrly").hide();
     $("#modal").hide();
     $("#modal").css("top", "-310px");
+    $("#modalHeader")[0].innerHTML = "Disclaimer"
+    $("#modalContent")[0].innerHTML = "Don't Forget to Add Words to Search For."
 });
+$(".searchMoreInfo").click(function () {
+    $("#modalHeader")[0].innerHTML = "Search Info"
+    $("#modalContent")[0].innerHTML = "1. Separate words with tilde (~)<br />2. Punctuation other than the apostrophe (') doesn't matter<br />3. Caps don't matter"
+    $("#ovrly").fadeIn();
+    $("#modal").show();
+    $("#modal").animate({top: "100"});
+})
 
 // split all searching text and return array of searching text
 function separateText(text) {
@@ -65,7 +78,7 @@ function readTxtFile(file, searchingText) {
     console.log("reading file, searching for words");
     fetch(file)
     .then(res => res.text())
-    .then(data => {getIndices(data.toLowerCase(), searchingText)})
+    .then(data => {getIndices(data.toLowerCase(), searchingText, true)})
 }
 
 // get all data content from .txt files
@@ -73,44 +86,47 @@ function readJsonFile(file, searchingText) {
     console.log("reading file, searching for words");
     fetch(file)
     .then(res => res.json())
-    .then(data => {getIndices(data, searchingText)})
+    .then(data => {getIndices(data, searchingText, false)})
 }
 
 // get all indices when searching words are found
-function getIndices(content, searchingText) {
+function getIndices(content, searchingText, txtFile) {
+    // console.log("----------------------");
     // console.log(content);
+    // console.log("----------------------");
     let index = 0;
     let iterations = 0;
-
-    const wordArray = splitByWord(content);
     // let total = wordArray.length;        only used for progress bar
-    let indexArray = [];
-    wordArray.forEach(word => {
-        searchingText.forEach(searcher => {
-            if(word === searcher) {
-                console.log(`found '${searcher}' at index: ${index}`);
-                indexArray.push(index);
-            }
-            iterations++;
-        })
-        index++;
-        // progressUpdate(index, total)         only usable with large files that take awhile to run through
-    });
-    console.log(`iterations: ${iterations} \nwords: ${index}`);
-    console.log(indexArray);
-    console.log(wordArray);
+
+    if(txtFile) {
+        const wordArray = splitByWord(content, txtFile);
+        let indexArray = [];
+        wordArray.forEach(word => {
+            searchingText.forEach(searcher => {
+                if(word === searcher) {
+                    console.log(`found '${searcher}' at index: ${index}`);
+                    indexArray.push(index);
+                }
+                iterations++;
+            })
+            index++;
+            // progressUpdate(index, total)         only usable with large files that take awhile to run through
+        });
+        console.log(`iterations: ${iterations} \nwords: ${index}`);
+        console.log(wordArray);
+    }
 }
 
 // Split words by spaces (plan to move this to remove all regex as well)
 // May need to make this remove punctuation as well (not entirely sure yet though)
-function splitByWord(content) {
-    // remove newline characters
-    // for .txt files
-    let fixed = content.replace(/\r?\n|\r/g, " ");
-    return fixed.split(" ");
-
+function splitByWord(content, txtFile) {
+    if(txtFile) {
+        // for .txt files
+        let fixed = content.replace(/\r?\n|\r/g, " ").replace(/[.,/#!$%^&*;:{}=-_`~()]/g, "");
+        return fixed.split(" ");
+    }
     // for .json files
-    // return content
+    return content
 }
 
 // Only works with large files (for now will not be used but I like the idea)
